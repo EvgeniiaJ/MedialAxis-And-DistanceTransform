@@ -1,0 +1,104 @@
+          Medial Axis and Distance Transform
+          
+Given a binary image, the task is to produce a loss-less compression of the input image
+via the skeleton of 8-connectness distance transform.
+  
+Summary of what your program will do:
+
+1) Opens the input file and load to an array.
+
+2) Performs the 1st-pass of the 8-connectness distance transform on input.
+
+3) PrettyPrint the result of 1st-pass to outFile1 with captions.
+ 
+4) Performs the 2nd-pass of the 8-connectness distance transform on the result of 1st pass.
+
+5) PrettyPrint the result of 2nd pass to outFile1 with captions.
+
+6) Performs local maxima operation on the result of 2nd-pass.
+
+7) PrettyPrint the local maxima to output file with captions.
+
+8) Produce skeleton: for each skeleton (i, j) > 0 (i.e., local maxima),
+write a triplet i j skeleton (i,j) to *skeleton* file, 
+one triplet per text-line 
+// skeleton file is the compressed (skeleton) file.
+
+9) The name of the compressed file is to be created during the run time of your program,
+   using the original file name with an extension “_skeleton.”  For example, if the name
+   of the input file is “image1”, then the name of the compressed file should
+   be “image1_skeleton”.
+   
+10) close the compressed file (image1_skeleton)
+
+// To make sure your program works correctly; you are going to do a de-compression on the compressed file as follows.
+	
+11) re-open the compressed file (image1_skeleton).
+
+12) re-set ZeroFramedAry to zero
+
+13) Load triplets from compressed file to ZeroFramedAry, i.e., for 
+each triplet (i, j, dist), ZeroFramedAry(i, j)  dist
+
+14) Perform 1st-pass expansion on the ZeroFramedAry
+// algorithm given below
+
+15) PrettyPrint the result of 1st-pass expansion to outFile2 with captions.
+
+16) Perform 2nd pass expansion on the result of 1st expansion 
+// algorithm given below
+
+17) PrettyPrint the result of 2nd-pass expansion to outFile2 with caption.
+
+// If your program work correctly, the result of 2nd-pass expansion should be 
+// identical to the result of the 2nd pass of distance transform.
+
+18) Produce decompressed file:
+a) Write the original image header to the decompressed file
+b) Threshold ZeroFramedAry with threshold value == 1 begins at (1,1)
+	and ends at (?,?)
+    i.e., if ZeroFramedAry (i, j) >= 1 
+			output 1 and a blank space to de-compressed file.
+		else
+			output 0 and a blank space to de-compressed file.
+  
+19) The name of the decompressed file is to be created during the run time of your program,
+    using the name of the input file with an extension “_decompressed.”  For example, if 
+    the name of the input file is “image1”, then the name of the compressed file should be
+    “image1_decompressed”.
+    
+20) Closed the de-compressed file.
+
+21) If your program works correctly, image1_decompressed should be identical to image1.
+
+22) run your program twice: with image1 and image2
+
+
+
+
+I. Input (args[0] / argv[1]): a binary image 
+	  
+II. Outputs: ** Please make sure all pixels are line-up nicely for good visualization (use font currier New)
+
+  - OutFile1 (args[1] / argv[2]): for
+ 		  - prettyPrint the results of 1st pass 8-connectedness distance transform 
+      - prettyPrint the results of 2nd pass 8-connectedness distance transform
+      - prettyPrint the local maxima
+
+  - OutFile2 (args[2]): for
+      - prettyPrint the results of 1st pass expansion
+      - prettyPrint the results of 2nd pass expansion
+
+  - skeleton file (generated at run-time) for store the compressed file
+  using the following format:
+  
+  Example:
+    20 20 0 7 // the header of the distance transform image.
+    4 7 2		// the skeleton pixel at (4, 7) with distance of 2
+    6 7 3		// the skeleton pixel at (6, 7) with distance of 3
+        :
+    :
+ 
+  - DeCompressed file (generated at run-time)- is an image file where
+  the first text-line is the image header, follows by rows and cols of pixel values.
+
